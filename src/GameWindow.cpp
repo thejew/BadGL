@@ -1,6 +1,8 @@
 #include "Precompiled.h"
 #include "GameWindow.h"
 
+#define ENABLE_VSYNC 0
+
 GameWindow::GameWindow(int width, int height, const char * title)
 :	m_Width(width),
 	m_Height(height),
@@ -17,7 +19,11 @@ GameWindow::GameWindow(int width, int height, const char * title)
 		exit(EXIT_FAILURE);
 	}
 	glfwMakeContextCurrent(m_Window);
+#if ENABLE_VSYNC
 	glfwSwapInterval(1);
+#else
+	glfwSwapInterval(0);
+#endif
 	printf("\nGL version: %s", glGetString(GL_VERSION));
 	printf("\nglfw GL version: %d.%d\n",
 		glfwGetWindowAttrib(m_Window, GLFW_CONTEXT_VERSION_MAJOR),
